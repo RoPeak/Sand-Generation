@@ -5,28 +5,37 @@ const grid = document.getElementById('grid');
 let gridArr;
 
 window.onload = mainLogic;
-window.onresize = mainLogic;
+window.onresize = function() {
+    resizeGrid(gridArr);
+    drawGrid(gridArr);
+};
 
 function mainLogic() {
+    // Create and draw the grid
+    gridArr = createGrid();
+    drawGrid(gridArr);
+}
+
+function calcNumSquares() {
     // Calculate how many squares are needed
     const numSquares = Math.min(
         Math.floor((window.innerWidth - 2 * marginSize) / squareSize),
         Math.floor((window.innerHeight - 2 * marginSize) / squareSize)
     );
+    return numSquares;
+}
+
+function createGrid() {
+    // Calculate number of squares needed
+    const numSquares = calcNumSquares();
 
     // Adjust the grid to fit the exact number of squares
     grid.style.gridTemplateColumns = `repeat(${numSquares}, ${squareSize}px)`;
     grid.style.gridTemplateRows = `repeat(${numSquares}, ${squareSize}px)`;
 
-    // Create and draw the grid
-    gridArr = createGrid(numSquares, numSquares);
-    drawGrid(gridArr);
-}
-
-function createGrid(numSquaresX, numSquaresY) {
-    var gridArr = new Array(numSquaresX);
+    let gridArr = new Array(numSquares);
     for (let i = 0; i < gridArr.length; i++) {
-        gridArr[i] = new Array(numSquaresY);
+        gridArr[i] = new Array(numSquares);
         for (let j = 0; j < gridArr[i].length; j++) {
             gridArr[i][j] = 0;
         }
@@ -34,7 +43,7 @@ function createGrid(numSquaresX, numSquaresY) {
     return gridArr
 }
 
-function drawGrid(gridArr) {
+function drawGrid() {
     // Clear the grid
     grid.innerHTML = '';
 
@@ -56,4 +65,14 @@ function drawGrid(gridArr) {
             grid.appendChild(square);
         }
     }
+}
+
+function resizeGrid(oldGrid) {
+    let newGrid = createGrid()
+    for (let i = 0; i < Math.min(oldGrid.length, newGrid.length); i++) {
+        for (let j = 0; j < Math.min(oldGrid[i].length, newGrid.length); j++) {
+            newGrid[i][j] = oldGrid[i][j];
+        }
+    }
+    gridArr = newGrid;
 }
