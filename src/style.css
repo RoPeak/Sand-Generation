@@ -1,0 +1,18 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(20, 30px);
+    grid-template-rows: repeate(20, 30px);
+    gap: 1px;
+}
+
+.square {
+    width: 30px;
+    height: 30px;
+    background-color: black;
+}
+
+.sand {
+    width: 30px;
+    height: 30px;
+    background-color: white;
+}
