@@ -1,6 +1,6 @@
 // Main variables
 const squareSize = 30;
-const marginSize = 200;
+const marginSize = 50;
 const grid = document.getElementById('grid');
 let gridArr;
 
@@ -9,15 +9,17 @@ window.onresize = mainLogic;
 
 function mainLogic() {
     // Calculate how many squares are needed
-    const numSquaresX = Math.ceil((window.innerWidth - marginSize) / squareSize);
-    const numSquaresY = Math.ceil((window.innerHeight -  marginSize) / squareSize);    
+    const numSquares = Math.min(
+        Math.floor((window.innerWidth - 2 * marginSize) / squareSize),
+        Math.floor((window.innerHeight - 2 * marginSize) / squareSize)
+    );
 
     // Adjust the grid to fit the exact number of squares
-    grid.style.gridTemplateColumns = `repeat(${numSquaresX}, ${squareSize}px)`;
-    grid.style.gridTemplateRows = `repeat(${numSquaresY}, ${squareSize}px)`;
-    
+    grid.style.gridTemplateColumns = `repeat(${numSquares}, ${squareSize}px)`;
+    grid.style.gridTemplateRows = `repeat(${numSquares}, ${squareSize}px)`;
+
     // Create and draw the grid
-    gridArr = createGrid(numSquaresX, numSquaresY);
+    gridArr = createGrid(numSquares, numSquares);
     drawGrid(gridArr);
 }
 
