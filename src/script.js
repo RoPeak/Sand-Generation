@@ -1,5 +1,5 @@
 // Main variables
-const squareSize = 30;
+const squareSize = 20;
 const marginSize = 50;
 const grid = document.getElementById('grid');
 let gridArr;
@@ -16,23 +16,42 @@ function mainLogic() {
     gridArr = createGrid();
     drawGrid();
 
-    // Apply gravity and redraw the grid every 100 ms
-    intervalID = setInterval(function() {
-        applyGravity();
-        drawGrid();
-    }, 10);
+    let isMouseDown = false;
 
-    // Stop the interval when the mouse button is pressed
-    window.onmousedown = function() {
-        clearInterval(intervalID);
-    }
-
+    // The gravity effect only begins once the user has placed some sand
     window.onmouseup = function() {
         intervalID = setInterval(function() {
             applyGravity();
             drawGrid();
-        }, 200)
+        }, 50);
+        isMouseDown = false;
     }
+
+    // Handle mouse move event
+    window.onmousemove = function(event) {
+        if (isMouseDown) {
+            // Get grid offset
+            const rect = grid.getBoundingClientRect();
+
+            // Calculate the grid coordinates based on the mouse position
+            const y = Math.floor((event.clientX - rect.left) / squareSize);
+            const x = Math.floor((event.clientY - rect.top) / squareSize);
+
+            // Check that coords are within the grid
+            if (x >= 0 && x < gridArr.length && y >= 0 && y < gridArr[0].length) {
+                // Add sand where the mouse is
+                gridArr[x][y] = 1;
+            }
+            drawGrid();
+        }
+    }
+
+    // Stop the interval when the mouse button is pressed
+    window.onmousedown = function() {
+        clearInterval(intervalID);
+        isMouseDown = true;
+    }
+
 }
 
 function calcNumSquares() {
