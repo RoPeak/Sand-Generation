@@ -3,17 +3,36 @@ const squareSize = 30;
 const marginSize = 50;
 const grid = document.getElementById('grid');
 let gridArr;
+let intervalID;
 
 window.onload = mainLogic;
 window.onresize = function() {
     resizeGrid(gridArr);
-    drawGrid(gridArr);
+    drawGrid();
 };
 
 function mainLogic() {
     // Create and draw the grid
     gridArr = createGrid();
-    drawGrid(gridArr);
+    drawGrid();
+
+    // Apply gravity and redraw the grid every 100 ms
+    intervalID = setInterval(function() {
+        applyGravity();
+        drawGrid();
+    }, 10);
+
+    // Stop the interval when the mouse button is pressed
+    window.onmousedown = function() {
+        clearInterval(intervalID);
+    }
+
+    window.onmouseup = function() {
+        intervalID = setInterval(function() {
+            applyGravity();
+            drawGrid();
+        }, 200)
+    }
 }
 
 function calcNumSquares() {
@@ -75,4 +94,15 @@ function resizeGrid(oldGrid) {
         }
     }
     gridArr = newGrid;
+}
+
+function applyGravity() {
+    for (let i = gridArr.length - 2; i >= 0; i--) {
+        for (let j = 0; j < gridArr[i].length; j++) {
+            if (gridArr[i][j] === 1 && gridArr[i+1][j] === 0) {
+                gridArr[i][j] = 0;
+                gridArr[i+1][j] = 1;
+            }
+        }
+    }
 }
