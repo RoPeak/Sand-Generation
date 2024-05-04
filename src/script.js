@@ -23,7 +23,7 @@ function mainLogic() {
         intervalID = setInterval(function() {
             applyGravity();
             drawGrid();
-        }, 200);
+        }, 50);
         isMouseDown = false;
     }
 
