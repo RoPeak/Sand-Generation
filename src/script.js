@@ -34,9 +34,7 @@ function createGrid(numSquaresX, numSquaresY) {
 
 function drawGrid(gridArr) {
     // Clear the grid
-    while (grid.firstChild) {
-        grid.firstChild.remove();
-    }
+    grid.innerHTML = '';
 
     // Create the squares
     for (let i = 0; i < gridArr.length; i++) {
@@ -46,6 +44,13 @@ function drawGrid(gridArr) {
             if (gridArr[i][j] === 1) {
                 square.classList.add('sand');
             }
+
+            // Add event listener for user click
+            square.addEventListener('click', function() {
+                gridArr[i][j] = 1;
+                drawGrid(gridArr);
+            })
+            
             grid.appendChild(square);
         }
     }
