@@ -1,14 +1,22 @@
+body {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
 .grid {
     display: grid;
-    grid-template-columns: repeat(20, 30px);
-    grid-template-rows: repeate(20, 30px);
+    grid-template-columns: repeat(auto-fill, 30px);
+    grid-template-rows: repeat(auto-fill, 30px);
+    width: 100vw;
+    height: 100vh;
     gap: 1px;
 }
 
 .square {
-    width: 30px;
-    height: 30px;
-    background-color: black;
+    background-color: transparent;
+    border: 1px solid white;
 }
 
 .sand {
