@@ -3,24 +3,18 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 30px);
-    grid-template-rows: repeat(auto-fill, 30px);
-    width: 100vw;
-    height: 100vh;
     gap: 1px;
 }
 
 .square {
     background-color: transparent;
     border: 1px solid white;
-}
-
-.sand {
-    width: 30px;
-    height: 30px;
-    background-color: white;
 }
