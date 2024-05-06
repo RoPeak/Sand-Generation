@@ -1,6 +1,6 @@
 // Main variables
 const squareSize = 20;
-const marginSize = 50;
+const marginSize = 80;
 const grid = document.getElementById('grid');
 let gridArr;
 let intervalID;
