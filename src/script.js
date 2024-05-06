@@ -115,6 +115,14 @@ function resizeGrid(oldGrid) {
     gridArr = newGrid;
 }
 
+function resetGrid() {
+    for (let i = 0; i < gridArr.length; i++) {
+        for (let j = 0; j < gridArr[i].length; j++) {
+            gridArr[i][j] = 0;
+        }
+    }
+}
+
 function applyGravity() {
     for (let i = gridArr.length - 2; i >= 0; i--) {
         for (let j = 0; j < gridArr[i].length; j++) {
