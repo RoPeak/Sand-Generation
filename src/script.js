@@ -1,6 +1,6 @@
 // Main variables
 const squareSize = 20;
-const marginSize = 50;
+const marginSize = 80;
 const grid = document.getElementById('grid');
 let gridArr;
 let intervalID;
@@ -113,6 +113,14 @@ function resizeGrid(oldGrid) {
         }
     }
     gridArr = newGrid;
+}
+
+function resetGrid() {
+    for (let i = 0; i < gridArr.length; i++) {
+        for (let j = 0; j < gridArr[i].length; j++) {
+            gridArr[i][j] = 0;
+        }
+    }
 }
 
 function applyGravity() {
