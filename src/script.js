@@ -1,5 +1,5 @@
 // Main variables
-const squareSize = 20;
+let squareSize = 80;
 const marginSize = 80;
 const grid = document.getElementById('grid');
 let gridArr;
@@ -12,6 +12,8 @@ window.onresize = function() {
 };
 
 function mainLogic() {
+    // Get the square size from the slider
+    squareSize = document.getElementById('square-size').value;
     // Create and draw the grid
     gridArr = createGrid();
     drawGrid();
@@ -21,6 +23,7 @@ function mainLogic() {
     // The gravity effect only begins once the user has placed some sand
     window.onmouseup = function() {
         intervalID = setInterval(function() {
+            squareSize = document.getElementById('square-size').value;
             applyGravity();
             drawGrid();
         }, 50);
