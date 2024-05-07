@@ -1,5 +1,6 @@
 // Main variables
 let squareSize = 50;
+let gravity = 50;
 const marginSize = 80;
 const grid = document.getElementById('grid');
 let gridArr;
@@ -16,7 +17,7 @@ function mainLogic() {
     gridArr = createGrid();
     drawGrid();
 
-    // Handle slider change
+    // Handle square size slider change
     document.getElementById('square-size').addEventListener('change', function(event) {
         // Update the square size and redraw the grid
         squareSize = Number(event.target.value);
@@ -24,14 +25,22 @@ function mainLogic() {
         resetGrid();
     })
 
+    // Handle gravity slider change
+    document.getElementById('gravity').addEventListener('change', function(event) {
+        // Update the gravity
+        gravity = Number(event.target.value);
+    })
+    
     let isMouseDown = false;
 
     // The gravity effect only begins once the user has placed some sand
     window.onmouseup = function() {
         intervalID = setInterval(function() {
+            console.log("Gravity slider: " + document.getElementById('gravity').value);
+            console.log("Gravity: " + gravity);
             applyGravity();
             drawGrid();
-        }, 50);
+        }, gravity);
         isMouseDown = false;
     }
 
@@ -65,8 +74,8 @@ function mainLogic() {
 function calcNumSquares() {
     // Calculate how many squares are needed
     const numSquares = Math.min(
-        Math.floor((window.innerWidth - 2 * marginSize) / squareSize),
-        Math.floor((window.innerHeight - 2 * marginSize) / squareSize)
+        Math.floor((window.innerWidth - 2 * marginSize) / squareSize - 1),
+        Math.floor((window.innerHeight - 2 * marginSize) / squareSize - 1)
     );
     return numSquares;
 }
@@ -147,8 +156,11 @@ function applyGravity() {
 }
 
 function resetButton() {
-    // Reset the slider
+    // Reset the square size slider
     document.getElementById('square-size').value = 50;
+
+    // Reset the gravity slider
+    document.getElementById('gravity').value = 50;
 
     resetGrid();
 }
