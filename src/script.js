@@ -1,5 +1,5 @@
 // Main variables
-let squareSize = 80;
+let squareSize = 50;
 const marginSize = 80;
 const grid = document.getElementById('grid');
 let gridArr;
@@ -12,18 +12,23 @@ window.onresize = function() {
 };
 
 function mainLogic() {
-    // Get the square size from the slider
-    squareSize = document.getElementById('square-size').value;
     // Create and draw the grid
     gridArr = createGrid();
     drawGrid();
+
+    // Handle slider change
+    document.getElementById('square-size').addEventListener('change', function(event) {
+        // Update the square size and redraw the grid
+        squareSize = Number(event.target.value);
+        resizeGrid(gridArr);
+        resetGrid();
+    })
 
     let isMouseDown = false;
 
     // The gravity effect only begins once the user has placed some sand
     window.onmouseup = function() {
         intervalID = setInterval(function() {
-            squareSize = document.getElementById('square-size').value;
             applyGravity();
             drawGrid();
         }, 50);
@@ -119,20 +124,31 @@ function resizeGrid(oldGrid) {
 }
 
 function resetGrid() {
+    // Reset the grid
     for (let i = 0; i < gridArr.length; i++) {
         for (let j = 0; j < gridArr[i].length; j++) {
             gridArr[i][j] = 0;
         }
     }
+    drawGrid();
 }
 
 function applyGravity() {
+    // Apply gravity to the sand
     for (let i = gridArr.length - 2; i >= 0; i--) {
         for (let j = 0; j < gridArr[i].length; j++) {
+            // If there is sand and the square below is empty, move the sand down
             if (gridArr[i][j] === 1 && gridArr[i+1][j] === 0) {
                 gridArr[i][j] = 0;
                 gridArr[i+1][j] = 1;
             }
         }
     }
+}
+
+function resetButton() {
+    // Reset the slider
+    document.getElementById('square-size').value = 50;
+
+    resetGrid();
 }
