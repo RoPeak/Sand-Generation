@@ -5,6 +5,12 @@ h1 {
     margin-bottom: 5px;
 }
 
+label {
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
 body {
     background-color: black;
     margin: 0;
@@ -39,6 +45,12 @@ body {
     align-items: center;
     justify-content: center;
     height: 100%;
+}
+
+.in-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button-3 {

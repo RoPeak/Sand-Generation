@@ -1,5 +1,6 @@
 // Main variables
-const squareSize = 20;
+let squareSize = 50;
+let gravity = 225;
 const marginSize = 80;
 const grid = document.getElementById('grid');
 let gridArr;
@@ -16,14 +17,39 @@ function mainLogic() {
     gridArr = createGrid();
     drawGrid();
 
+    // Handle square size slider change
+    document.getElementById('square-size').addEventListener('change', function(event) {
+        // Update the square size and redraw the grid
+        squareSize = Number(event.target.value);
+        resizeGrid(gridArr);
+        resetGrid();
+    })
+
+    // Handle gravity slider change
+    document.getElementById('gravity').addEventListener('change', function(event) {
+        // Update the gravity
+        gravity = Number(event.target.value);
+
+        // Clear the interval and apply gravity
+        clearInterval(intervalID);
+        intervalID = setInterval(function() {
+            console.log("Gravity slider: " + document.getElementById('gravity').value);
+            console.log("Gravity: " + gravity);
+            applyGravity();
+            drawGrid();
+        }, gravity);
+    })
+    
     let isMouseDown = false;
 
     // The gravity effect only begins once the user has placed some sand
     window.onmouseup = function() {
         intervalID = setInterval(function() {
+            console.log("Gravity slider: " + document.getElementById('gravity').value);
+            console.log("Gravity: " + gravity);
             applyGravity();
             drawGrid();
-        }, 50);
+        }, gravity);
         isMouseDown = false;
     }
 
@@ -57,8 +83,8 @@ function mainLogic() {
 function calcNumSquares() {
     // Calculate how many squares are needed
     const numSquares = Math.min(
-        Math.floor((window.innerWidth - 2 * marginSize) / squareSize),
-        Math.floor((window.innerHeight - 2 * marginSize) / squareSize)
+        Math.floor((window.innerWidth - 2 * marginSize) / squareSize - 1),
+        Math.floor((window.innerHeight - 2 * marginSize) / squareSize - 1)
     );
     return numSquares;
 }
@@ -116,20 +142,34 @@ function resizeGrid(oldGrid) {
 }
 
 function resetGrid() {
+    // Reset the grid
     for (let i = 0; i < gridArr.length; i++) {
         for (let j = 0; j < gridArr[i].length; j++) {
             gridArr[i][j] = 0;
         }
     }
+    drawGrid();
 }
 
 function applyGravity() {
+    // Apply gravity to the sand
     for (let i = gridArr.length - 2; i >= 0; i--) {
         for (let j = 0; j < gridArr[i].length; j++) {
+            // If there is sand and the square below is empty, move the sand down
             if (gridArr[i][j] === 1 && gridArr[i+1][j] === 0) {
                 gridArr[i][j] = 0;
                 gridArr[i+1][j] = 1;
             }
         }
     }
+}
+
+function resetButton() {
+    // Reset the square size slider
+    document.getElementById('square-size').value = 50;
+
+    // Reset the gravity slider
+    document.getElementById('gravity').value = 275;
+
+    resetGrid();
 }
