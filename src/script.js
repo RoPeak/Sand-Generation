@@ -1,6 +1,6 @@
 // Main variables
 let squareSize = 50;
-let gravity = 50;
+let gravity = 225;
 const marginSize = 80;
 const grid = document.getElementById('grid');
 let gridArr;
@@ -29,6 +29,15 @@ function mainLogic() {
     document.getElementById('gravity').addEventListener('change', function(event) {
         // Update the gravity
         gravity = Number(event.target.value);
+
+        // Clear the interval and apply gravity
+        clearInterval(intervalID);
+        intervalID = setInterval(function() {
+            console.log("Gravity slider: " + document.getElementById('gravity').value);
+            console.log("Gravity: " + gravity);
+            applyGravity();
+            drawGrid();
+        }, gravity);
     })
     
     let isMouseDown = false;
@@ -160,7 +169,7 @@ function resetButton() {
     document.getElementById('square-size').value = 50;
 
     // Reset the gravity slider
-    document.getElementById('gravity').value = 50;
+    document.getElementById('gravity').value = 275;
 
     resetGrid();
 }
