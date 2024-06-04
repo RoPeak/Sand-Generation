@@ -169,7 +169,7 @@ function resetButton() {
     document.getElementById('square-size').value = 50;
 
     // Reset the gravity slider
-    document.getElementById('gravity').value = 275;
+    document.getElementById('gravity').value = 225;
 
     resetGrid();
 }
